@@ -1,13 +1,15 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "./libraries/stakeLib.sol";
 
-contract Stake is IERC721Receiver {
+contract Stake is ERC721Holder, ReentrancyGuard {
 
     event Staked(address staker, uint256 tokenId);
     event Unstaked(address staker, uint256 tokenId);
@@ -89,7 +91,7 @@ contract Stake is IERC721Receiver {
     //stake multiple
     function stakemul(uint256[] memory tokenIds) external {
         //check array size
-        require(tokenIds.length <= 10);
+        require(tokenIds.length <= 20);
         
         //check that NFTs are not already staked
         for(uint8 i = 0; i< tokenIds.length; i++){
@@ -145,7 +147,7 @@ contract Stake is IERC721Receiver {
 
     //unstake multiple
     function unstakeMul(uint256[] memory tokenIds) external {
-        require(tokenIds.length <= 10);//not sure if 10 is too many will have to check
+        require(tokenIds.length <= 20);//not sure if 10 is too many will have to check
 
         //setting reusable counter here
         uint8 i = 0;
@@ -187,8 +189,7 @@ contract Stake is IERC721Receiver {
 
     }
 
-    function calculateTotal(uint256[] memory tokenIds) internal returns(uint256) {
-        uint256 total = 0;
+    function calculateTotal(uint256[] memory tokenIds) internal view returns(uint256 total) {
         for(uint8 i = 0; i<tokenIds.length; i++){
             total += (block.number - stakeDetails[tokenIds[i]].blockStaked);
         }
@@ -220,7 +221,7 @@ contract Stake is IERC721Receiver {
     function getTokensStaked(address query) public view returns(uint256[] memory tokens) {
         uint16 counter =0;
         for(uint16 i =1; i<=10000; i++){
-            if(StakeLib.ownerOf(i, minter) == stakeDetails[i].staker){
+            if(stakeDetails[i].staker == query){
                 tokens[counter] = i;
                 counter ++;
             }

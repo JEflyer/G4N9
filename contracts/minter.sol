@@ -10,7 +10,7 @@ contract cryptog4n9nft is ERC721Enumerable, Ownable {
   string public baseURI;
   string public baseExtension = ".json";
   string public notRevealedUri;
-  uint256 public cost = 80 ether;
+  uint256 public cost = 1 * 10**18;
   uint256 public maxSupply = 10000;
   uint256 public maxMintAmount = 5;
   uint256 public nftPerAddressLimit = 5;
