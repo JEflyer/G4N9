@@ -39,10 +39,11 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         g4n9 = _g4n9;
         minter = _minter;
         rewardAmountPerBlock = _reward;
+        admin = msg.sender;
     }
 
     modifier onlyAdmin{
-        require(msg.sender == admin);
+        require(msg.sender == admin, "NA");
         _;
     }
 
@@ -73,7 +74,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         StakeLib.owns(tokenId, minter);
 
         //get approval of NFT
-        StakeLib.getApprovalForOne(tokenId, minter);
+        // StakeLib.getApprovalForOne(tokenId, minter);
     
         //transfer token to this address
         StakeLib.bringHere(tokenId, minter);
@@ -102,7 +103,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         StakeLib.ownsMul(tokenIds, minter);
 
         //get approval of all NFTs
-        StakeLib.getApprovalForMul(tokenIds, minter);
+        // StakeLib.getApprovalForMul(tokenIds, minter);
 
         //transfer tokens to this address
         StakeLib.bringHereMul(tokenIds, minter);
@@ -121,10 +122,12 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     //unstake 1
     function unstake(uint256 tokenId) external {
         //check that NFT is staked
-        require(currentlyStaked[tokenId]);
+        require(currentlyStaked[tokenId], "Not Staked");
 
         //check that msg.sender == owner of tokenID to be unstaked
-        require(StakeLib.ownerOf(tokenId, minter) == msg.sender);
+        // StakeLib.owns(tokenId, minter);
+        require(msg.sender == stakeDetails[tokenId].staker,"NS");
+
 
         //remove from currently staked
         currentlyStaked[tokenId] = false;
@@ -133,10 +136,10 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         StakeLib.sendBack(tokenId, minter, stakeDetails[tokenId].staker);
 
         //remove approval of NFT
-        StakeLib.removeApprovalForOne(tokenId, minter);
+        // StakeLib.removeApprovalForOne(tokenId, minter);
 
         //payout
-        StakeLib.payout(stakeDetails[tokenId].staker, StakeLib.calculate(rewardAmountPerBlock, block.number - stakeDetails[tokenId].blockStaked), g4n9);
+        StakeLib.payout(stakeDetails[tokenId].staker, StakeLib.calculate(rewardAmountPerBlock, block.number - stakeDetails[tokenId].blockStaked), g4n9, admin);
 
         //remove Tx
         delete stakeDetails[tokenId];
@@ -172,10 +175,10 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         StakeLib.sendBackMul(tokenIds, minter, stakeDetails[tokenIds[0]].staker);
 
         //remove approval of NFT
-        StakeLib.removaApprovalForMul(tokenIds, minter);
+        // StakeLib.removaApprovalForMul(tokenIds, minter);
 
         //payout
-        StakeLib.payout(stakeDetails[tokenIds[0]].staker, StakeLib.calculate(rewardAmountPerBlock, calculateTotal(tokenIds)), g4n9);
+        StakeLib.payout(stakeDetails[tokenIds[0]].staker, StakeLib.calculate(rewardAmountPerBlock, calculateTotal(tokenIds)), g4n9, admin);
 
         //reset counter
         i = 0;
@@ -212,20 +215,23 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         }
 
         //payout to msg.sender
-        StakeLib.payout(msg.sender, amount, g4n9);
+        StakeLib.payout(msg.sender, amount, g4n9, admin);
     }
 
 
 
     //get tokens staked
-    function getTokensStaked(address query) public view returns(uint256[] memory tokens) {
+    function getTokensStaked(address query) public view returns(uint256[] memory) {
         uint16 counter =0;
-        for(uint16 i =1; i<=10000; i++){
+        uint16 balance = StakeLib.bal(query, minter);
+        uint256[] memory tokens = new uint256[](balance);
+        for(uint16 i =1; i<=100; i++){
             if(stakeDetails[i].staker == query){
                 tokens[counter] = i;
                 counter ++;
             }
         }
+        return tokens;
     }
 
 }

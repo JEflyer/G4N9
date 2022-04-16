@@ -3,20 +3,26 @@ pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
+// import "hardhat/console.sol";
 
 library StakeLib {
 
     event Rewarded(address staker, uint256 amount);
 
+    function bal(address query, address minter) internal view returns (uint16){
+        return uint16(IERC721(minter).balanceOf(query));
+    }
 
     function owns(uint256 tokenID,address minter) internal view {
-        require(msg.sender == ownerOf(tokenID, minter));
+        address owner = ownerOf(tokenID, minter);
+        // console.log("Sender " , msg.sender);
+        // console.log("Owner ", owner);
+        require(msg.sender == owner , "Err");
     }
 
     function ownsMul(uint256[] memory tokenIDs, address minter) internal view {
         for(uint8 i =0; i< tokenIDs.length; i++){
-            require(ownerOf(tokenIDs[i], minter) == msg.sender);
+            require(ownerOf(tokenIDs[i], minter) == msg.sender, "Err");
         }
     }
 
@@ -75,8 +81,8 @@ library StakeLib {
         return reward * noOfBlocks;
     }
 
-    function payout(address to, uint256 amount, address g4n9) internal {
-        IERC20(g4n9).transferFrom(address(this), to, amount); 
+    function payout(address to, uint256 amount, address g4n9, address from) internal {
+        IERC20(g4n9).transferFrom(from, to, amount); 
         emit Rewarded(to, amount);   
     }
 } 
