@@ -66,7 +66,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
 
     //stake 1
-    function stake (uint256 tokenId) external {
+    function stake (uint256 tokenId) external nonReentrant {
         //check that NFT is not already staked
         require(!currentlyStaked[tokenId]);
 
@@ -90,9 +90,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //stake multiple
-    function stakemul(uint256[] memory tokenIds) external {
+    function stakeMul(uint256[] memory tokenIds) external nonReentrant{
         //check array size
-        require(tokenIds.length <= 20);
+        require(tokenIds.length <= 50);
         
         //check that NFTs are not already staked
         for(uint8 i = 0; i< tokenIds.length; i++){
@@ -120,7 +120,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //unstake 1
-    function unstake(uint256 tokenId) external {
+    function unstake(uint256 tokenId) external nonReentrant{
         //check that NFT is staked
         require(currentlyStaked[tokenId], "Not Staked");
 
@@ -149,8 +149,8 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //unstake multiple
-    function unstakeMul(uint256[] memory tokenIds) external {
-        require(tokenIds.length <= 20);//not sure if 10 is too many will have to check
+    function unstakeMul(uint256[] memory tokenIds) external nonReentrant{
+        require(tokenIds.length <= 50);//not sure if 10 is too many will have to check
 
         //setting reusable counter here
         uint8 i = 0;
@@ -161,7 +161,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         }
 
         //check that msg.sender == owner of all tokenIDs to be unstaked
-        StakeLib.ownsMul(tokenIds, minter);
+        require(staked(msg.sender, tokenIds));
 
         //reset counter
         i = 0;
@@ -192,6 +192,15 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
     }
 
+    function staked(address query, uint256[] memory tokens) internal view returns(bool){
+        for(uint8 i =0; i< tokens.length; i++){
+            if(stakeDetails[tokens[i]].staker != query){
+                return false;
+            }
+        }
+        return true;
+    }
+
     function calculateTotal(uint256[] memory tokenIds) internal view returns(uint256 total) {
         for(uint8 i = 0; i<tokenIds.length; i++){
             total += (block.number - stakeDetails[tokenIds[i]].blockStaked);
@@ -199,7 +208,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //claim
-    function claim() external {
+    function claim() external nonReentrant{
         //get list of tokens msg.sender has staked
         uint256[] memory tokens = getTokensStaked(msg.sender);
 
@@ -217,8 +226,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //payout to msg.sender
         StakeLib.payout(msg.sender, amount, g4n9, admin);
     }
-
-
 
     //get tokens staked
     function getTokensStaked(address query) public view returns(uint256[] memory) {
