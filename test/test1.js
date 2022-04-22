@@ -151,538 +151,538 @@ describe("Testing", () => {
         
     // })
 
-    // it("Testing Staking:1", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 1
+    it("Testing Staking:1", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 1
 
-    //     for(let i = 0; i< x; i++){
-    //         sending.push(tokens[i])
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-
-    
-    // it("Testing Staking:2", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 2
-
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
-        
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-    
-    // it("Testing Staking:3", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 3
-
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
-        
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-
-    // it("Testing Staking:4", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 4
-
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
-        
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-    
-    // it("Testing Staking:5", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 5
-
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
-        
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-    
-    // it("Testing Staking:6", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 6
-
-    //     for(let i = 0; i< x; i++){
-    //         sending.push(tokens[i])
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //     }
-        
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-
-    // it("Testing Staking:7", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 7
-
-    //     for(let i = 0; i< x; i++){
-    //         sending.push(tokens[i])
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //     }
-        
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
 
     
-    // it("Testing Staking:8", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 8
+    it("Testing Staking:2", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 2
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+    
+    it("Testing Staking:3", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 3
+
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
+        
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+
+    it("Testing Staking:4", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 4
+
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
+        
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+    
+    it("Testing Staking:5", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 5
+
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
+        
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+    
+    it("Testing Staking:6", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 6
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+        }
+        
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+
+    it("Testing Staking:7", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 7
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+        }
+        
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
 
     
-    // it("Testing Staking:9", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 9
+    it("Testing Staking:8", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 8
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
 
-    // it("Testing Staking:10", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 10
+    
+    it("Testing Staking:9", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 9
 
-    //     for(let i = 0; i< x; i++){
-    //         sending.push(tokens[i])
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-    
-    // it("Testing Staking:11", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 11
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
-        
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-    
-    // it("Testing Staking:12", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 12
+    it("Testing Staking:10", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 10
 
-    //     for(let i = 0; i< x; i++){
-    //         sending.push(tokens[i])
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    // it("Testing Staking:13", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 13
+    it("Testing Staking:11", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 11
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    // it("Testing Staking:14", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 14
+    it("Testing Staking:12", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 12
 
-    //     for(let i = 0; i< x; i++){
-    //         sending.push(tokens[i])
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    // it("Testing Staking:15", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 15
+    it("Testing Staking:13", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 13
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    // it("Testing Staking:16", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 16
+    it("Testing Staking:14", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 14
 
-    //     for(let i = 0; i< x; i++){
-    //         sending.push(tokens[i])
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    // it("Testing Staking:17", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 17
+    it("Testing Staking:15", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 15
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    // it("Testing Staking:18", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 18
+    it("Testing Staking:16", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 16
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    // it("Testing Staking:19", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 19
+    it("Testing Staking:17", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 17
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    // it("Testing Staking:20", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 20
+    it("Testing Staking:18", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 18
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    
-    // it("Testing Staking:21", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 21
+    it("Testing Staking:19", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 19
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
-    
-    // it("Testing Staking:22", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 22
+    it("Testing Staking:20", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 20
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
     
-    // it("Testing Staking:23", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 23
+    it("Testing Staking:21", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 21
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
     
-    // it("Testing Staking:24", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 24
+    it("Testing Staking:22", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 22
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
     
-    // it("Testing Staking:25", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 25
+    it("Testing Staking:23", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 23
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
     
-    // it("Testing Staking:26", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 26
+    it("Testing Staking:24", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 24
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
     
-    // it("Testing Staking:27", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 27
+    it("Testing Staking:25", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 25
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
     
-    // it("Testing Staking:28", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 28
+    it("Testing Staking:26", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 26
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
     
-    // it("Testing Staking:29", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 29
+    it("Testing Staking:27", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 27
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
     
     
-    // it("Testing Staking:30", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 30
+    it("Testing Staking:28", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 28
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-        
-    // it("Testing Staking:31", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 31
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+    
+    
+    it("Testing Staking:29", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 29
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
-        
-    // it("Testing Staking:32", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 32
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+    
+    
+    it("Testing Staking:30", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 30
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
-    // it("Testing Staking:33", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 33
+    it("Testing Staking:31", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 31
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
-    // it("Testing Staking:34", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 34
+    it("Testing Staking:32", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 32
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
-    // it("Testing Staking:35", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 35
+    it("Testing Staking:33", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 33
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
-    // it("Testing Staking:36", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 36
+    it("Testing Staking:34", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 34
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
-    // it("Testing Staking:37", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 37
+    it("Testing Staking:35", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 35
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
-    // it("Testing Staking:38", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 38
+    it("Testing Staking:36", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 36
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
-    // it("Testing Staking:39", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 39
+    it("Testing Staking:37", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 37
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
-    // it("Testing Staking:40", async() => {
-    //     let tokens = await Minter.walletOfOwner(user2.address) 
-    //     let sending = []
-    //     let x = 40
+    it("Testing Staking:38", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 38
 
-    //     for(let i = 0; i< x; i++){
-    //         await Minter.connect(user2).approve(Stake.address,tokens[i])
-    //         sending.push(tokens[i])
-    //     }
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
         
-    //     expect(await Stake.connect(user2).stakeMul(sending))
-    // })
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+        
+    it("Testing Staking:39", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 39
+
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
+        
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
+        
+    it("Testing Staking:40", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address) 
+        let sending = []
+        let x = 40
+
+        for(let i = 0; i< x; i++){
+            await Minter.connect(user2).approve(Stake.address,tokens[i])
+            sending.push(tokens[i])
+        }
+        
+        expect(await Stake.connect(user2).stakeMul(sending))
+    })
         
 
     

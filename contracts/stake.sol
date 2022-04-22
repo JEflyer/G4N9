@@ -31,20 +31,49 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     address private g4n9;
     address private admin;
 
+    mapping(address => uint16) private noStaked;
+
+    address[] public haveStaked;
+    uint32 public index;
+    uint16 public totalStaked;
+
     constructor(
         address _minter,
         uint256 _reward,
         address _g4n9
     ) {
+        index=0;
         g4n9 = _g4n9;
         minter = _minter;
         rewardAmountPerBlock = _reward;
+        totalStaked = 0;
         admin = msg.sender;
     }
 
     modifier onlyAdmin{
         require(msg.sender == admin, "NA");
         _;
+    }
+
+    function getallStaked() external view returns(address[] memory){
+        return haveStaked;
+    }
+
+    function getNoStaked(address query) external view returns(uint16){
+        return noStaked[query];
+    }
+
+    function getClaimable(address query) external view returns(uint256){
+        uint256[] memory tokens = getTokensStaked(query);
+        require(tokens.length < 0);
+        return calculateFullPayout(tokens);
+    }
+
+    function calculateFullPayout(uint256[] memory arr) internal view returns(uint256 total){
+        total =0;
+        for(uint16 i = 0; i< arr.length; i++){
+            total += StakeLib.calculate(rewardAmountPerBlock,block.number - stakeDetails[arr[i]].blockStaked);
+        }
     }
 
     //change reward amount
@@ -56,6 +85,15 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     function changeAdmin(address _new) external onlyAdmin {
         admin = _new;
         emit NewAdmin(_new);
+    }
+
+    function hasStaked() internal view returns(bool){
+        for(uint32 i = 0; i< haveStaked.length; i++ ){
+            if(haveStaked[i] == msg.sender){
+                return true;
+            }
+        }
+        return false;
     }
 
     //withdraw remaining $g4n9 from contract
@@ -73,18 +111,23 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //check that msg.sender == owner of tokenID to be staked
         StakeLib.owns(tokenId, minter);
 
-        //get approval of NFT
-        // StakeLib.getApprovalForOne(tokenId, minter);
+        if(!hasStaked()){
+            haveStaked.push(msg.sender);
+            index+=1;
+        }
     
         //transfer token to this address
         StakeLib.bringHere(tokenId, minter);
-    
+        totalStaked++;
+
         //insert Tx
         stakeDetails[tokenId].staker = msg.sender;
         stakeDetails[tokenId].blockStaked = block.number;
         
         //add to currently staked
         currentlyStaked[tokenId] = true;
+
+        noStaked[msg.sender]+=1;
 
         emit Staked(msg.sender, tokenId);
     }
@@ -102,11 +145,16 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //check that msg.sender == owner of all tokenIDs to be staked
         StakeLib.ownsMul(tokenIds, minter);
 
-        //get approval of all NFTs
-        // StakeLib.getApprovalForMul(tokenIds, minter);
+        if(!hasStaked()){            
+            haveStaked.push(msg.sender);
+            index+=1;
+        }
 
         //transfer tokens to this address
         StakeLib.bringHereMul(tokenIds, minter);
+
+        totalStaked+=uint16(tokenIds.length);
+
 
         //insert Txs
         for(uint8 i = 0; i< tokenIds.length; i++){
@@ -117,6 +165,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
             currentlyStaked[tokenIds[i]] = true;
             emit Staked(msg.sender, tokenIds[i]);
         }
+
+        noStaked[msg.sender]+=uint16(tokenIds.length);
+
     }
 
     //unstake 1
@@ -135,6 +186,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //transfer token from this address
         StakeLib.sendBack(tokenId, minter, stakeDetails[tokenId].staker);
 
+        totalStaked--;
+
+
         //remove approval of NFT
         // StakeLib.removeApprovalForOne(tokenId, minter);
 
@@ -143,6 +197,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
         //remove Tx
         delete stakeDetails[tokenId];
+
+        noStaked[msg.sender]-=1;
+
 
         emit Unstaked(msg.sender, tokenId);
 
@@ -174,6 +231,8 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //transfer tokens from this address
         StakeLib.sendBackMul(tokenIds, minter, stakeDetails[tokenIds[0]].staker);
 
+        totalStaked-=uint16(tokenIds.length);
+
         //remove approval of NFT
         // StakeLib.removaApprovalForMul(tokenIds, minter);
 
@@ -189,6 +248,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
             
             emit Unstaked(msg.sender, tokenIds[i]);
         }
+
+        noStaked[msg.sender]-=uint16(tokenIds.length);
+
 
     }
 
