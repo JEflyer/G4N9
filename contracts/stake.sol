@@ -117,6 +117,8 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //add to currently staked
         currentlyStaked[tokenId] = true;
 
+        addTokenToStakedList(msg.sender, tokenId);
+
         noStaked[msg.sender]+=1;
 
         emit Staked(msg.sender, tokenId);
@@ -151,6 +153,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
             stakeDetails[tokenIds[i]].staker = msg.sender;
             stakeDetails[tokenIds[i]].blockStaked = block.number;
          
+            addTokenToStakedList(msg.sender, tokenIds[i]);
+
+
             //add to currentlyStaked map
             currentlyStaked[tokenIds[i]] = true;
             emit Staked(msg.sender, tokenIds[i]);
@@ -187,6 +192,8 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
         //remove Tx
         delete stakeDetails[tokenId];
+
+        removeTokenFromStakedList(msg.sender, tokenId);
 
         noStaked[msg.sender]-=1;
 
@@ -236,6 +243,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         for(; i< tokenIds.length; i++){
             delete stakeDetails[tokenIds[i]];
             
+            removeTokenFromStakedList(msg.sender, tokenIds[i]);
+
+
             emit Unstaked(msg.sender, tokenIds[i]);
         }
 
