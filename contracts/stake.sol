@@ -21,9 +21,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         uint256 blockStaked;
     }
 
-    mapping(uint256 => Tx) private stakeDetails;
+    mapping(uint16 => Tx) private stakeDetails;
 
-    mapping(uint256 => bool) private currentlyStaked;
+    mapping(uint16 => bool) private currentlyStaked;
 
     uint256 private rewardAmountPerBlock = 12731717254023;
 
@@ -33,9 +33,11 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
     mapping(address => uint16) private noStaked;
 
-    address[] public haveStaked;
-    uint32 public index;
-    uint16 public totalStaked;
+    mapping(address => uint16[]) private tokensOwned;
+
+    address[] private haveStaked;
+    uint32 private index;
+    uint16 private totalStaked;
 
     constructor(
         address _minter,
@@ -63,18 +65,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         return noStaked[query];
     }
 
-    function getClaimable(address query) external view returns(uint256){
-        uint256[] memory tokens = getTokensStaked(query);
-        require(tokens.length < 0);
-        return calculateFullPayout(tokens);
-    }
-
-    function calculateFullPayout(uint256[] memory arr) internal view returns(uint256 total){
-        total =0;
-        for(uint16 i = 0; i< arr.length; i++){
-            total += StakeLib.calculate(rewardAmountPerBlock,block.number - stakeDetails[arr[i]].blockStaked);
-        }
-    }
 
     //change reward amount
     function changeReward(uint256 _reward) external onlyAdmin {
@@ -104,7 +94,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
 
     //stake 1
-    function stake (uint256 tokenId) external nonReentrant {
+    function stake (uint16 tokenId) external nonReentrant {
         //check that NFT is not already staked
         require(!currentlyStaked[tokenId]);
 
@@ -133,7 +123,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //stake multiple
-    function stakeMul(uint256[] memory tokenIds) external nonReentrant{
+    function stakeMul(uint16[] memory tokenIds) external nonReentrant{
         //check array size
         require(tokenIds.length <= 50);
         
@@ -171,7 +161,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //unstake 1
-    function unstake(uint256 tokenId) external nonReentrant{
+    function unstake(uint16 tokenId) external nonReentrant{
         //check that NFT is staked
         require(currentlyStaked[tokenId], "Not Staked");
 
@@ -206,7 +196,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //unstake multiple
-    function unstakeMul(uint256[] memory tokenIds) external nonReentrant{
+    function unstakeMul(uint16[] memory tokenIds) external nonReentrant{
         require(tokenIds.length <= 50);//not sure if 10 is too many will have to check
 
         //setting reusable counter here
@@ -254,7 +244,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
     }
 
-    function staked(address query, uint256[] memory tokens) internal view returns(bool){
+    function staked(address query, uint16[] memory tokens) internal view returns(bool){
         for(uint8 i =0; i< tokens.length; i++){
             if(stakeDetails[tokens[i]].staker != query){
                 return false;
@@ -263,7 +253,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         return true;
     }
 
-    function calculateTotal(uint256[] memory tokenIds) internal view returns(uint256 total) {
+    function calculateTotal(uint16[] memory tokenIds) internal view returns(uint256 total) {
         for(uint8 i = 0; i<tokenIds.length; i++){
             total += (block.number - stakeDetails[tokenIds[i]].blockStaked);
         }
@@ -272,10 +262,10 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     //claim
     function claim() external nonReentrant{
         //get list of tokens msg.sender has staked
-        uint256[] memory tokens = getTokensStaked(msg.sender);
+        uint16[] memory tokens = getTokensStaked(msg.sender);
 
         //check that msg.sender is a staker
-        require(tokens.length != 0);
+        require(tokens.length != 0,"ERR:NS");
 
         //calculate the total reward due
         uint256 amount = rewardAmountPerBlock * calculateTotal(tokens);
@@ -290,17 +280,71 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //get tokens staked
-    function getTokensStaked(address query) public view returns(uint256[] memory) {
+    // function getTokensStaked(address query) public view returns(uint256[] memory) {
+    //     uint16 counter =0;
+    //     uint256[] memory tokens;
+    //     for(uint16 i =1; i<=10000; i++){
+    //         if(stakeDetails[i].staker == query){
+    //             tokens[counter] = i;
+    //             counter ++;
+    //         }
+    //     }
+    //     return tokens;
+    // }
+
+    function getTokensStaked(address query) public view returns(uint16[] memory){
+        return tokensOwned[query];
+    }
+
+    function addTokenToStakedList(address addr, uint16 token) internal {
+        uint16[] storage arr = tokensOwned[addr];
+
+        arr.push(token);
+    }
+
+    function removeTokenFromStakedList(address addr, uint16 token) internal {
+        uint16[] storage arr = tokensOwned[addr];
+
+        uint16 arrIndex =0;
+        for(uint16 i =0; i< arr.length; i++){
+            if(arr[i] == token){
+                arrIndex = i;
+            }
+        }
+        delete arr[arrIndex];
+        arr[arrIndex] = arr[arr.length-1];
+        delete arr[arr.length-1];
+        arr.pop();
+    }
+
+    function getTotalPayout(address query) external view returns(uint256){
         uint16 counter =0;
-        uint16 balance = StakeLib.bal(query, minter);
-        uint256[] memory tokens = new uint256[](balance);
-        for(uint16 i =1; i<=100; i++){
+        uint16[] memory tokens;
+        for(uint16 i =1; i<=10000; i++){
             if(stakeDetails[i].staker == query){
                 tokens[counter] = i;
                 counter ++;
             }
         }
-        return tokens;
+        uint256 result;
+        for(uint16 i = 0; i< tokens.length; i++){
+            result += (block.number - stakeDetails[tokens[i]].blockStaked) * rewardAmountPerBlock;
+        }
+        return result;
     }
+
+    function getAddresses() external view returns(address[] memory){
+        return haveStaked;
+    }
+
+    function getIndex() external view returns(uint32){
+        return index;
+    }
+    
+    function getTotalStaked() external view returns(uint16){
+        return totalStaked;
+    }
+
+
 
 }

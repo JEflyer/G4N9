@@ -117,11 +117,6 @@ describe("Testing", () => {
         expect(await Stake.connect(user2).claim())
     })
 
-    //this test is null & void as tokens to be claimed from are generated in the contract
-    // it("Should not allow a user to claim rewards for a token they do not own", async() => {
-        
-    // })
-
     it("Should allow the admin to change the admin", async() => {
         expect(await Stake.connect(deployer).changeAdmin(user2.address))
     })
@@ -1368,9 +1363,9 @@ describe("Testing", () => {
         let x = 40
 
         for(let i = 0; i< x; i++){
-            await Minter.connect(user2).approve(Stake.address,tokens[i])
             sending.push(tokens[i])
         }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
         
         await Stake.connect(user2).stakeMul(sending)
 
@@ -1379,5 +1374,668 @@ describe("Testing", () => {
         expect(await Stake.connect(user2).unstakeMul(sending))
     })
 
+    //--------------------------- claim test---------------//
+    it("Should allow the user to claim rewards for 2 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 2
 
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 3 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 3
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 4 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 4
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 5 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 5
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 6 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 6
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 7 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 7
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 8 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 8
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 9 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 9
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 10 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 10
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 11 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 11
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 12 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 12
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 13 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 13
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 14 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 14
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 15 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 15
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 16 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 16
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 17 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 17
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 18 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 18
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 19 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 19
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 20 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 20
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 21 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 21
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 22 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 22
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 23 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 23
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 24 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 24
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 25 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 25
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+
+    it("Should allow the user to claim rewards for 26 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 26
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 27 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 27
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 28 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 28
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 29 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 29
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 30 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 30
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 31 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 31
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 32 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 32
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 33 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 33
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 34 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 34
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 35 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 35
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 36 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 36
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 37 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 37
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 38 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 38
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 39 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 39
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
+    it("Should allow the user to claim rewards for 40 tokens, after an amount of time", async() => {
+        let tokens = await Minter.walletOfOwner(user2.address)
+        let sending = []
+        let x = 40
+
+        for(let i = 0; i< x; i++){
+            sending.push(tokens[i])
+        }
+        await Minter.connect(user2).setApprovalForAll(Stake.address,true)
+        
+        await Stake.connect(user2).stakeMul(sending)
+            
+        await ethers.provider.send("evm_increaseTime", [3600 * 24 * 2])
+    
+        expect(await Stake.connect(user2).claim())
+    })
+    
 })
