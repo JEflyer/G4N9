@@ -31,12 +31,8 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     address private g4n9;
     address private admin;
 
-    mapping(address => uint16) private noStaked;
-
     mapping(address => uint16[]) private tokensOwned;
 
-    address[] private haveStaked;
-    uint32 private index;
     uint16 private totalStaked;
 
     constructor(
@@ -57,14 +53,9 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         _;
     }
 
-    function getallStaked() external view returns(address[] memory){
-        return haveStaked;
-    }
-
     function getNoStaked(address query) external view returns(uint16){
-        return noStaked[query];
+        return uint16(tokensOwned[query].length);
     }
-
 
     //change reward amount
     function changeReward(uint256 _reward) external onlyAdmin {
@@ -75,15 +66,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     function changeAdmin(address _new) external onlyAdmin {
         admin = _new;
         emit NewAdmin(_new);
-    }
-
-    function hasStaked() internal view returns(bool){
-        for(uint32 i = 0; i< haveStaked.length; i++ ){
-            if(haveStaked[i] == msg.sender){
-                return true;
-            }
-        }
-        return false;
     }
 
     //withdraw remaining $g4n9 from contract
@@ -100,11 +82,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
         //check that msg.sender == owner of tokenID to be staked
         StakeLib.owns(tokenId, minter);
-
-        if(!hasStaked()){
-            haveStaked.push(msg.sender);
-            index+=1;
-        }
     
         //transfer token to this address
         StakeLib.bringHere(tokenId, minter);
@@ -136,11 +113,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
         //check that msg.sender == owner of all tokenIDs to be staked
         StakeLib.ownsMul(tokenIds, minter);
-
-        if(!hasStaked()){            
-            haveStaked.push(msg.sender);
-            index+=1;
-        }
 
         //transfer tokens to this address
         StakeLib.bringHereMul(tokenIds, minter);
@@ -183,10 +155,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
         totalStaked--;
 
-
-        //remove approval of NFT
-        // StakeLib.removeApprovalForOne(tokenId, minter);
-
         //payout
         StakeLib.payout(stakeDetails[tokenId].staker, StakeLib.calculate(rewardAmountPerBlock, block.number - stakeDetails[tokenId].blockStaked), g4n9, admin);
 
@@ -194,9 +162,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         delete stakeDetails[tokenId];
 
         removeTokenFromStakedList(msg.sender, tokenId);
-
-        noStaked[msg.sender]-=1;
-
 
         emit Unstaked(msg.sender, tokenId);
 
@@ -230,9 +195,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
         totalStaked-=uint16(tokenIds.length);
 
-        //remove approval of NFT
-        // StakeLib.removaApprovalForMul(tokenIds, minter);
-
         //payout
         StakeLib.payout(stakeDetails[tokenIds[0]].staker, StakeLib.calculate(rewardAmountPerBlock, calculateTotal(tokenIds)), g4n9, admin);
 
@@ -245,13 +207,8 @@ contract Stake is ERC721Holder, ReentrancyGuard {
             
             removeTokenFromStakedList(msg.sender, tokenIds[i]);
 
-
             emit Unstaked(msg.sender, tokenIds[i]);
         }
-
-        noStaked[msg.sender]-=uint16(tokenIds.length);
-
-
     }
 
     function staked(address query, uint16[] memory tokens) internal view returns(bool){
@@ -288,19 +245,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //payout to msg.sender
         StakeLib.payout(msg.sender, amount, g4n9, admin);
     }
-
-    //get tokens staked
-    // function getTokensStaked(address query) public view returns(uint256[] memory) {
-    //     uint16 counter =0;
-    //     uint256[] memory tokens;
-    //     for(uint16 i =1; i<=10000; i++){
-    //         if(stakeDetails[i].staker == query){
-    //             tokens[counter] = i;
-    //             counter ++;
-    //         }
-    //     }
-    //     return tokens;
-    // }
 
     function getTokensStaked(address query) public view returns(uint16[] memory){
         return tokensOwned[query];
@@ -341,14 +285,6 @@ contract Stake is ERC721Holder, ReentrancyGuard {
             result += (block.number - stakeDetails[tokens[i]].blockStaked) * rewardAmountPerBlock;
         }
         return result;
-    }
-
-    function getAddresses() external view returns(address[] memory){
-        return haveStaked;
-    }
-
-    function getIndex() external view returns(uint32){
-        return index;
     }
     
     function getTotalStaked() external view returns(uint16){
