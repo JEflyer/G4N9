@@ -18,7 +18,7 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     
     struct Tx {
         address staker;
-        uint256 blockStaked;
+        uint32 blockStaked;
     }
 
     mapping(uint16 => Tx) private stakeDetails;
@@ -74,23 +74,30 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         require(!currentlyStaked[tokenId]);
 
         //check that msg.sender == owner of tokenID to be staked
-        StakeLib.owns(tokenId, minter);
+        // StakeLib.owns(tokenId, minter);
+
+        //check that msg.sender == owner of tokenID to be staked
+        address owner = IERC721(minter).ownerOf(uint256(tokenId));
+        require(msg.sender == owner , "Err");
     
         //transfer token to this address
-        StakeLib.bringHere(tokenId, minter);
+        // StakeLib.bringHere(tokenId, minter);
+
+        //transfer token to this address
+        IERC721(minter).safeTransferFrom(msg.sender, address(this), uint256(tokenId));
 
         //increment totalStaked
         totalStaked++;
 
         //insert Tx
         stakeDetails[tokenId].staker = msg.sender;
-        stakeDetails[tokenId].blockStaked = block.number;
+        stakeDetails[tokenId].blockStaked = uint32(block.number);
         
         //add to currently staked
         currentlyStaked[tokenId] = true;
 
         //add token to msg.sender's array of staked tokens
-        addTokenToStakedList(msg.sender, tokenId);
+        addTokenToStakedList(tokenId);
 
         emit Staked(msg.sender, tokenId);
     }
@@ -100,26 +107,41 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //check array size
         require(tokenIds.length <= 40);
         
+        //declare counter for the for loops
+        uint8 i = 0;
+
         //check that NFTs are not already staked
-        for(uint8 i = 0; i< tokenIds.length; i++){
+        for(i = 0; i< tokenIds.length; i++){
             require(!currentlyStaked[tokenIds[i]]);
         }
 
         //check that msg.sender == owner of all tokenIDs to be staked
-        StakeLib.ownsMul(tokenIds, minter);
+        // StakeLib.ownsMul(tokenIds, minter);
+
+        //check that msg.sender == owner of all tokenIDs to be staked
+        for(i =0; i< tokenIds.length; i++){
+            require(IERC721(minter).ownerOf(uint256(tokenIds[i])) == msg.sender, "Err");
+        }
 
         //transfer tokens to this address
-        StakeLib.bringHereMul(tokenIds, minter);
+        // StakeLib.bringHereMul(tokenIds, minter);
+
+        //transfer tokens to this address
+        for(i = 0; i< tokenIds.length; i++){
+            IERC721(minter).safeTransferFrom(msg.sender, address(this), uint256(tokenIds[i]));
+        }
 
         //add the amount of tokens being staked to the total staked amount 
         totalStaked+=uint16(tokenIds.length);
 
         //insert Txs
-        for(uint8 i = 0; i< tokenIds.length; i++){
-            stakeDetails[tokenIds[i]].staker = msg.sender;
-            stakeDetails[tokenIds[i]].blockStaked = block.number;
+        for(i = 0; i< tokenIds.length; i++){
+            stakeDetails[tokenIds[i]] = Tx({
+                staker: msg.sender,
+                blockStaked: uint32(block.number)
+            });
          
-            addTokenToStakedList(msg.sender, tokenIds[i]);
+            addTokenToStakedList(tokenIds[i]);
 
             //add to currentlyStaked mapping
             currentlyStaked[tokenIds[i]] = true;
@@ -140,19 +162,27 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         currentlyStaked[tokenId] = false;
 
         //transfer token from this address
-        StakeLib.sendBack(tokenId, minter, stakeDetails[tokenId].staker);
+        // StakeLib.sendBack(tokenId, minter, stakeDetails[tokenId].staker);
+        IERC721(minter).safeTransferFrom(address(this), msg.sender, uint256(tokenId));
 
         //decrement totalStaked
         totalStaked--;
 
+  
         //payout
-        StakeLib.payout(stakeDetails[tokenId].staker, StakeLib.calculate(rewardAmountPerBlock, block.number - stakeDetails[tokenId].blockStaked), g4n9, admin);
+        uint256 amount = StakeLib.calculate(rewardAmountPerBlock, block.number - stakeDetails[tokenId].blockStaked); 
+        IERC20(g4n9).transferFrom(
+            admin, 
+            msg.sender, 
+            amount
+        ); 
+        emit Rewarded(msg.sender, amount);
 
         //remove Tx
         delete stakeDetails[tokenId];
 
         //remove tokenID from msg.sender's array of staked tokens
-        removeTokenFromStakedList(msg.sender, tokenId);
+        removeTokenFromStakedList(tokenId);
 
         emit Unstaked(msg.sender, tokenId);
     }
@@ -172,34 +202,40 @@ contract Stake is ERC721Holder, ReentrancyGuard {
         //check that msg.sender == owner of all tokenIDs to be unstaked
         require(staked(msg.sender, tokenIds));
 
-        //reset counter
-        i = 0;
-
         //remove from currently staked
-        for(; i< tokenIds.length; i ++){
+        for(i = 0; i< tokenIds.length; i ++){
             currentlyStaked[tokenIds[i]] = false;
         }
 
         //transfer tokens from this address
-        StakeLib.sendBackMul(tokenIds, minter, stakeDetails[tokenIds[0]].staker);
+        // StakeLib.sendBackMul(tokenIds, minter, stakeDetails[tokenIds[0]].staker);
+        for(i = 0; i< tokenIds.length; i++){
+            IERC721(minter).safeTransferFrom(address(this), msg.sender, uint256(tokenIds[i]));
+        }
 
         //reduce totalStaked by the amount of tokens being unstaked
         totalStaked-=uint16(tokenIds.length);
 
         //payout
-        StakeLib.payout(stakeDetails[tokenIds[0]].staker, StakeLib.calculate(rewardAmountPerBlock, calculateTotal(tokenIds)), g4n9, admin);
+        // StakeLib.payout(stakeDetails[tokenIds[0]].staker, StakeLib.calculate(rewardAmountPerBlock, calculateTotal(tokenIds)), g4n9, admin);
+        //payout
+        uint256 amount = StakeLib.calculate(rewardAmountPerBlock, calculateTotal(tokenIds)); 
+        IERC20(g4n9).transferFrom(
+            admin, 
+            msg.sender, 
+            amount
+        ); 
+        emit Rewarded(msg.sender, amount);
 
-        //reset counter
-        i = 0;
 
         //remove Txs
-        for(; i< tokenIds.length; i++){
+        for(i = 0; i< tokenIds.length; i++){
             //delete the stakeDetails for tokens being unstaked 
             //this also refunds upto 15k gas
             delete stakeDetails[tokenIds[i]];
 
             //remove token from msg.senders array of staked tokens
-            removeTokenFromStakedList(msg.sender, tokenIds[i]);
+            removeTokenFromStakedList(tokenIds[i]);
 
             emit Unstaked(msg.sender, tokenIds[i]);
         }
@@ -235,11 +271,17 @@ contract Stake is ERC721Holder, ReentrancyGuard {
 
         //set the tokens blockStaked to now
         for(uint16 i = 0; i < tokens.length; i++){
-            stakeDetails[tokens[i]].blockStaked = block.number;
+            stakeDetails[tokens[i]].blockStaked = uint32(block.number);
         }
 
         //payout to msg.sender
-        StakeLib.payout(msg.sender, amount, g4n9, admin);
+        IERC20(g4n9).transferFrom(
+            admin, 
+            msg.sender, 
+            amount
+        ); 
+        emit Rewarded(msg.sender, amount);
+
     }
 
     //get tokens staked by a given address
@@ -248,15 +290,15 @@ contract Stake is ERC721Holder, ReentrancyGuard {
     }
 
     //add a token to a given addresses array of staked tokens
-    function addTokenToStakedList(address addr, uint16 token) internal {
-        uint16[] storage arr = tokensOwned[addr];
+    function addTokenToStakedList(uint16 token) internal {
+        uint16[] storage arr = tokensOwned[msg.sender];
 
         arr.push(token);
     }
 
     //remove a token to a given addresses array of staked tokens
-    function removeTokenFromStakedList(address addr, uint16 token) internal {
-        uint16[] storage arr = tokensOwned[addr];
+    function removeTokenFromStakedList(uint16 token) internal {
+        uint16[] storage arr = tokensOwned[msg.sender];
 
         uint16 arrIndex =0;
         for(uint16 i =0; i< arr.length; i++){
